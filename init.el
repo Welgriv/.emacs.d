@@ -1,5 +1,6 @@
 ;;; package --- Summary
 ;;; Commentary:
+
 ;; Correspondance des parenthèses :
 ;; Avec ceci, positionnez le curseur sur une parenthèse ouvrante ou
 ;; une parenthèse fermante, Emacs met en couleur la paire de
@@ -86,8 +87,8 @@
 (split-window-right)
 
 ;; smart tab (ident first then complet)
-(require 'smart-tab)
-(global-smart-tab-mode 1)
+;; (require 'smart-tab)
+;; (global-smart-tab-mode 1)
 
 ;; copier la ligne courrante ;;;;;;;;;;
 (defun copy-line (arg)
@@ -141,7 +142,7 @@ Ease of use features:
   "COMMENT OR UNCOMMENT CURRENT LINE."
   (interactive)
   (comment-or-uncomment-region (line-beginning-position) (line-end-position))
-  (next-line))
+  (forward-line))
 
 (global-set-key (kbd "C-x C-;") 'toggle-comment-on-line)
 
@@ -149,7 +150,10 @@ Ease of use features:
 (setq TeX-PDF-mode t)
 
 ;; active l'auto completion (petite GUI qui affiche les completions posisbles)
+(require 'auto-complete-config)
+(ac-config-default)
 (global-auto-complete-mode t)
+(add-to-list 'ac-modes 'latex-mode)	; besoin d'une activation explicite pour lateX
 
 (provide 'init)
 ;;; init ends here
