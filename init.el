@@ -64,12 +64,10 @@
  '(custom-enabled-themes (quote (tango-dark)))
  ;; selectionne les packages mentionés dans la dernière parenthèses
  '(package-selected-packages (quote (multiple-cursors flycheck)))
+  ;; full screen au démarrage
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
  ) ; end of custom-vet-variable
 
-;; les packages uniquement en mode lateX
- (add-hook 'LaTeX-mode-hook '(package-selected-packages (quote (auctex auctex-latexmk))))
- ;; full screen au démarrage
- '(initial-frame-alist (quote ((fullscreen . maximized))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -91,6 +89,8 @@
 (split-window-right)
 
 ;; ;; POUR LATEX
+;; les packages uniquement en mode lateX
+ (add-hook 'LaTeX-mode-hook '(package-selected-packages (quote (auctex auctex-latexmk))))
 ;; En mode lateX, enlève le full screen et garde un seul buffer ouvert.
 (add-hook 'LaTeX-mode-hook 'delete-other-windows)
 ;; mode mathe en mode lateX
@@ -140,7 +140,7 @@ Ease of use features:
 ;; j'ai oublié ce que ça faisait, mais c'est utile...
 (global-auto-revert-mode t)
 
-;; limit les commentaire à 80 caratères
+;; limit les commentaire à 80 caratères C
 (add-hook 'c-mode-common-hook
 	  (lambda ()
 	    (auto-fill-mode 1)
@@ -148,6 +148,12 @@ Ease of use features:
 		 (lambda ()
 		   (not (eq (get-text-property (point) 'face)
 			    'font-lock-comment-face))))))
+;; active flyspell dans les commentaire C
+  (add-hook 'c-mode-common-hook
+          (lambda ()
+            (flyspell-prog-mode)
+            ; ...
+          ))
 
 ;; commenter la ligne active (C-x C-; ne fonctionne pas pour toutes les versions)
 (defun toggle-comment-on-line ()
