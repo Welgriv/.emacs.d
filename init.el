@@ -63,9 +63,13 @@
  ;; Met le theme tango dark
  '(custom-enabled-themes (quote (tango-dark)))
  ;; selectionne les packages mentionés dans la dernière parenthèses
- '(package-selected-packages (quote (auctex auctex-latexmk multiple-cursors flycheck)))
+ '(package-selected-packages (quote (multiple-cursors flycheck)))
+ ) ; end of custom-vet-variable
+
+;; les packages uniquement en mode lateX
+ (add-hook 'LaTeX-mode-hook '(package-selected-packages (quote (auctex auctex-latexmk))))
  ;; full screen au démarrage
- '(initial-frame-alist (quote ((fullscreen . maximized)))))
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -85,6 +89,14 @@
 
 ;; split screen vertical au lancement
 (split-window-right)
+
+;; ;; POUR LATEX
+;; En mode lateX, enlève le full screen et garde un seul buffer ouvert.
+(add-hook 'LaTeX-mode-hook 'delete-other-windows)
+;; mode mathe en mode lateX
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+;; active flyspell
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
 ;; smart tab (ident first then complet)
 ;; (require 'smart-tab)
