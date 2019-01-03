@@ -59,14 +59,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- 
- ;; Met le theme tango dark
+ '(LaTeX-command-style
+   (quote
+    (("" "%(PDF)%(latex) -shell-escape %(file-line-error) %(extraopts) %S%(PDFout)"))))
  '(custom-enabled-themes (quote (tango-dark)))
- ;; selectionne les packages mentionés dans la dernière parenthèses
- '(package-selected-packages (quote (multiple-cursors flycheck)))
-  ;; full screen au démarrage
  '(initial-frame-alist (quote ((fullscreen . maximized))))
- ) ; end of custom-vet-variable
+ '(package-selected-packages (quote (auctex auctex-latexmk))))
+ ;; end of custom-vet-variable
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -74,10 +73,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
 
 ;; le sous répertoire contenant les .el (doit être présent...)
 (add-to-list 'load-path "~/.emacs.d/elFiles")
@@ -88,15 +83,28 @@
 ;; split screen vertical au lancement
 (split-window-right)
 
-;; ;; POUR LATEX
-;; les packages uniquement en mode lateX
- (add-hook 'LaTeX-mode-hook '(package-selected-packages (quote (auctex auctex-latexmk))))
-;; En mode lateX, enlève le full screen et garde un seul buffer ouvert.
+;; ---- LATEX
+;; enlève le full screen et garde un seul buffer ouvert.
 (add-hook 'LaTeX-mode-hook 'delete-other-windows)
 ;; mode mathe en mode lateX
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 ;; active flyspell
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+;; pour avoir pdflatex comme comande de compile de base pour lateX
+;; (setq TeX-PDF-mode t) ; ne semble pas necessaire...
+;; Change la touche de gestion des erreurs de compile
+(defun rebind-tex-next-error ()
+  "Rebind the function TeX-next-error."
+  (global-unset-key "\C-c `")
+  (global-set-key (kbd "C-c =") 'TeX-next-error))
+
+(add-hook 'LaTeX-mode-hook 'rebind-tex-next-error)
+
+;; appel la fonction clean de lateX à la fermtur d'un buffer
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+             (add-hook 'kill-emacs-hook 'TeX-clean nil 'make-it-local)))
+;; ---- LATEX specific termine ici
 
 ;; smart tab (ident first then complet)
 ;; (require 'smart-tab)
@@ -133,7 +141,7 @@ Ease of use features:
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 
 ;; spell check décomanter tout et ajouter le dico pour que ça marche
-;; (setq-default ispell-program-name "chemin vers aspell...")
+(setq-default ispell-program-name "$ASPELLINSTALL/aspell/bin/aspell")
 ;; (custom-set-variables '(ispell-dictionary "fr")) ;charge le dico fr
 ;; (add-hook 'text-mode-hook 'flyspell-mode)
 
@@ -149,11 +157,7 @@ Ease of use features:
 		   (not (eq (get-text-property (point) 'face)
 			    'font-lock-comment-face))))))
 ;; active flyspell dans les commentaire C
-  (add-hook 'c-mode-common-hook
-          (lambda ()
-            (flyspell-prog-mode)
-            ; ...
-          ))
+(add-hook 'c-mode-common-hook (lambda () (flyspell-prog-mode)))
 
 ;; commenter la ligne active (C-x C-; ne fonctionne pas pour toutes les versions)
 (defun toggle-comment-on-line ()
@@ -163,9 +167,6 @@ Ease of use features:
   (forward-line))
 
 (global-set-key (kbd "C-x C-;") 'toggle-comment-on-line)
-
-;; pour avoir pdflatex comme comande de compile de base pour lateX
-(setq TeX-PDF-mode t)
 
 ;; active l'auto completion (petite GUI qui affiche les completions posisbles)
 (require 'auto-complete-config)
