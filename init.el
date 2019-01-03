@@ -157,7 +157,7 @@ Ease of use features:
 		   (not (eq (get-text-property (point) 'face)
 			    'font-lock-comment-face))))))
 ;; active flyspell dans les commentaire C
-(add-hook 'c-mode-common-hook (lambda () (flyspell-prog-mode)))
+;; (add-hook 'c-mode-common-hook (lambda () (flyspell-prog-mode)))
 
 ;; commenter la ligne active (C-x C-; ne fonctionne pas pour toutes les versions)
 (defun toggle-comment-on-line ()
