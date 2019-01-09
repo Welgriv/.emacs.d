@@ -24,7 +24,6 @@
 ;; Ne pas afficher le message d'accueil
 (setq inhibit-startup-message t)
  
-
 ;; Pour une interface graphique un peu dépouillée
 (menu-bar-mode -1)
 ;(scroll-bar-mode -1)
@@ -100,15 +99,22 @@
 
 (add-hook 'LaTeX-mode-hook 'rebind-tex-next-error)
 
-;; appel la fonction clean de lateX à la fermtur d'un buffer
+;; change la touche pour l'autocompletion
+(add-hook 'LaTeX-mode-hook
+      (lambda()
+        (local-set-key [C-tab] 'TeX-complete-symbol)))
+
+;; appel la fonction clean de lateX à la fermetur d'un buffer
 (add-hook 'LaTeX-mode-hook
           (lambda ()
-             (add-hook 'kill-emacs-hook 'TeX-clean nil 'make-it-local)))
+	    (add-hook 'kill-buffer-hook 'TeX-clean nil 'make-it-local)))
+;; pareil si on kill emacs
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+	    (add-hook 'kill-emacs-hook 'TeX-clean nil 'make-it-local)))
+;; désactive flycheck
+(setq flycheck-global-modes '(not LaTeX-mode latex-mode))
 ;; ---- LATEX specific termine ici
-
-;; smart tab (ident first then complet)
-;; (require 'smart-tab)
-;; (global-smart-tab-mode 1)
 
 ;; copier la ligne courrante ;;;;;;;;;;
 (defun copy-line (arg)
@@ -141,7 +147,7 @@ Ease of use features:
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 
 ;; spell check décomanter tout et ajouter le dico pour que ça marche
-(setq-default ispell-program-name "$ASPELLINSTALL/aspell/bin/aspell")
+(setq-default ispell-program-name "/usr/bin/aspell")
 ;; (custom-set-variables '(ispell-dictionary "fr")) ;charge le dico fr
 ;; (add-hook 'text-mode-hook 'flyspell-mode)
 
@@ -172,7 +178,7 @@ Ease of use features:
 (require 'auto-complete-config)
 (ac-config-default)
 (global-auto-complete-mode t)
-(add-to-list 'ac-modes 'latex-mode)	; besoin d'une activation explicite pour lateX
+;; (add-to-list 'ac-modes 'latex-mode)	; besoin d'une activation explicite pour lateX
 
 (provide 'init)
 ;;; init ends here
