@@ -63,7 +63,8 @@
     (("" "%(PDF)%(latex) -shell-escape %(file-line-error) %(extraopts) %S%(PDFout)"))))
  '(custom-enabled-themes (quote (tango-dark)))
  '(initial-frame-alist (quote ((fullscreen . maximized))))
- '(package-selected-packages (quote (auctex auctex-latexmk))))
+ '(package-selected-packages (quote (auctex auctex-latexmk)))
+ '(safe-local-variable-values (quote ((ispell-dictionary . "fr")))))
  ;; end of custom-vet-variable
 
 (custom-set-faces
@@ -114,6 +115,11 @@
 	    (add-hook 'kill-emacs-hook 'TeX-clean nil 'make-it-local)))
 ;; désactive flycheck
 (setq flycheck-global-modes '(not LaTeX-mode latex-mode))
+
+(setq-default TeX-master nil)
+(setq TeX-parse-self t)
+;; auto-paire pour les $
+(setq TeX-electric-math (cons "$" "$"))
 ;; ---- LATEX specific termine ici
 
 ;; copier la ligne courrante ;;;;;;;;;;
@@ -179,6 +185,16 @@ Ease of use features:
 (ac-config-default)
 (global-auto-complete-mode t)
 ;; (add-to-list 'ac-modes 'latex-mode)	; besoin d'une activation explicite pour lateX
+
+;; LUSTRE
+
+;; Set the load-path variable :
+(setq load-path
+     (append load-path
+	      '("~/.emacs.d/lustre.el")))
+
+(setq auto-mode-alist (cons '("\\.lus$" . lustre-mode) auto-mode-alist))
+(autoload 'lustre-mode "lustre" "Edition de code lustre" t)
 
 (provide 'init)
 ;;; init ends here
