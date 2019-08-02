@@ -196,6 +196,10 @@ Ease of use features:
 (setq auto-mode-alist (cons '("\\.lus$" . lustre-mode) auto-mode-alist))
 (autoload 'lustre-mode "lustre" "Edition de code lustre" t)
 
+;; WSL SECTION
+
+(global-set-key (kbd "C-M-h") 'backward-kill-word)
+
 (provide 'init)
 ;;; init ends here
 
