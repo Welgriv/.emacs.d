@@ -84,8 +84,6 @@
 (split-window-right)
 
 ;; ---- LATEX
-;; enlève le full screen et garde un seul buffer ouvert.
-(add-hook 'LaTeX-mode-hook 'delete-other-windows)
 ;; mode mathe en mode lateX
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 ;; active flyspell
