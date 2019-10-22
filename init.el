@@ -1,6 +1,18 @@
 ;;; package --- Summary
 ;;; Commentary:
 
+;; Rappel de raccourcis basique :
+;; M-g n ouvrir le fichier et aller à la prochaine erreur
+;; C-c C-c quiter
+;; C-g quitter la commande en cours
+;; M-; commenter le block de code
+;; C-h v voir la valeur d'une variable
+;; en gdb commande de base :
+;; C-x C-a C-b : mettre un bp sur la ligne du fichier où on est
+;;           s : step
+;;           r : run
+;;           n : next
+
 ;; Correspondance des parenthèses :
 ;; Avec ceci, positionnez le curseur sur une parenthèse ouvrante ou
 ;; une parenthèse fermante, Emacs met en couleur la paire de
@@ -171,6 +183,9 @@ Ease of use features:
 ;; active flyspell dans les commentaire C
 ;; (add-hook 'c-mode-common-hook (lambda () (flyspell-prog-mode)))
 
+;; c++ mode pour les .tpp
+(add-to-list 'auto-mode-alist '("\\.tpp\\'" . c++-mode))
+
 ;; commenter la ligne active (C-x C-; ne fonctionne pas pour toutes les versions)
 (defun toggle-comment-on-line ()
   "COMMENT OR UNCOMMENT CURRENT LINE."
@@ -195,6 +210,16 @@ Ease of use features:
 
 (setq auto-mode-alist (cons '("\\.lus$" . lustre-mode) auto-mode-alist))
 (autoload 'lustre-mode "lustre" "Edition de code lustre" t)
+
+;; COMPILATION
+;; Rappel : M-g n pour aller à l'erreur suivante après compile
+
+;; Pour faire scroller le buffer de compile en bas
+(setq compilation-scroll-output 'first-error)
+;; compile avec f5, recompile avec f6, debug avec f7
+(global-set-key [f5] 'compile)
+(global-set-key [f6] 'recompile)
+(global-set-key [f7] 'gdb)
 
 (provide 'init)
 ;;; init ends here
