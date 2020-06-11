@@ -19,29 +19,29 @@
 ;; parenthèses.
 ;;; Code:
 (show-paren-mode 1)
- 
+
 ;; Utiliser UTF-8 comme codage de caractères par défaut.
 (set-language-environment 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
- 
+
 ;; Afficher les numéros de lignes dans la mode-line (barre du bas de
 ;; fenêtre) :
 (line-number-mode t)
 (column-number-mode t)
- 
+
 ;; Faire clignoter l'écran au lieu de faire « beep ».
 (setq visible-bell t)
- 
+
 ;; Ne pas afficher le message d'accueil
 (setq inhibit-startup-message t)
- 
+
 ;; Pour une interface graphique un peu dépouillée
 (menu-bar-mode -1)
 ;(scroll-bar-mode -1)
 (tool-bar-mode -1)
 ;(blink-cursor-mode -1)
- 
+
 ;; Définir des touches pour se déplacer rapidement :
 ;; Aller à la parenthèse ouvrante correspondante :
 (global-set-key [M-right] 'forward-sexp)
@@ -112,7 +112,7 @@
 
 (add-hook 'LaTeX-mode-hook 'rebind-tex-next-error)
 
-;; change la touche pour l'autocompletion
+;; change la touche pour l'autocompletion en latex : ctrl tab
 (add-hook 'LaTeX-mode-hook
       (lambda()
         (local-set-key [C-tab] 'TeX-complete-symbol)))
@@ -183,6 +183,8 @@ Ease of use features:
 ;; active flyspell dans les commentaire C
 ;; (add-hook 'c-mode-common-hook (lambda () (flyspell-prog-mode)))
 
+;; RAPPEL : C-u M-; kill le commentaire en fin de ligne
+
 ;; c++ mode pour les .tpp
 (add-to-list 'auto-mode-alist '("\\.tpp\\'" . c++-mode))
 
@@ -221,6 +223,12 @@ Ease of use features:
 (global-set-key [f6] 'recompile)
 (global-set-key [f7] 'gdb)
 
+;; Fait apparaitre les tabluations comme 4 espaces (mais c'est bien un tab qui sera inséré dans le fichier !)
+(setq-default tab-width 4)
+
+;; Enlève les espaces de fin de ligne à l'enregistrement d'un fichier.
+(add-hook 'before-save-hook
+          'delete-trailing-whitespace)
+
 (provide 'init)
 ;;; init ends here
-
