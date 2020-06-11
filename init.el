@@ -92,8 +92,15 @@
 ;; parentèse crochets etc... auto
 (electric-pair-mode t)
 
-;; split screen vertical au lancement
-(split-window-right)
+;; split screen vertical au lancement si 2 ficihiers
+(defun 2-windows-vertical-to-horizontal ()
+  "Trnasform vertical split to horizontal split."
+  (let ((buffers (mapcar 'window-buffer (window-list))))
+    (when (= 2 (length buffers))
+      (delete-other-windows)
+      (set-window-buffer (split-window-horizontally) (cadr buffers)))))
+
+(add-hook 'emacs-startup-hook '2-windows-vertical-to-horizontal)
 
 ;; ---- LATEX
 ;; ;; enlève le full screen et garde un seul buffer ouvert.
