@@ -2,6 +2,7 @@
 ;;; Commentary:
 
 ;; Rappel de raccourcis basique :
+;; M-l met le prochain mot en minuscule
 ;; M-g n ouvrir le fichier et aller à la prochaine erreur
 ;; C-c C-c quiter
 ;; C-g quitter la commande en cours
@@ -141,6 +142,11 @@
 (setq TeX-electric-math (cons "$" "$"))
 ;; ---- LATEX specific termine ici
 
+;; spell check décomanter tout et ajouter le dico pour que ça marche
+(setq-default ispell-program-name "/usr/bin/aspell")
+;; (custom-set-variables '(ispell-dictionary "fr")) ;charge le dico fr
+;; (add-hook 'text-mode-hook 'flyspell-mode)
+
 ;; copier la ligne courrante ;;;;;;;;;;
 (defun copy-line (arg)
   "Copy lines (as many as prefix ARG) in the kill ring.
@@ -164,17 +170,12 @@ Ease of use features:
   (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
 ;; optional key binding
-(global-set-key "\C-c\C-k" 'copy-line)
+(global-set-key "\C-x\C-k" 'copy-line)
 ;;;;;;;;;;;;;;;;;;;;;
 
 ;; permet d'avoir un curseur sur chaque ligne selectionné
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-
-;; spell check décomanter tout et ajouter le dico pour que ça marche
-(setq-default ispell-program-name "/usr/bin/aspell")
-;; (custom-set-variables '(ispell-dictionary "fr")) ;charge le dico fr
-;; (add-hook 'text-mode-hook 'flyspell-mode)
 
 ;; j'ai oublié ce que ça faisait, mais c'est utile...
 (global-auto-revert-mode t)
