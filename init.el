@@ -181,13 +181,13 @@ Ease of use features:
 (global-auto-revert-mode t)
 
 ;; limit les commentaire à 80 caratères C
-(add-hook 'c-mode-common-hook
-	  (lambda ()
-	    (auto-fill-mode 1)
-	    (set (make-local-variable 'fill-nobreak-predicate)
-		 (lambda ()
-		   (not (eq (get-text-property (point) 'face)
-			    'font-lock-comment-face))))))
+;; (add-hook 'c-mode-common-hook
+;; 	  (lambda ()
+;; 	    (auto-fill-mode 1)
+;; 	    (set (make-local-variable 'fill-nobreak-predicate)
+;; 		 (lambda ()
+;; 		   (not (eq (get-text-property (point) 'face)
+;; 			    'font-lock-comment-face))))))
 ;; active flyspell dans les commentaire C
 ;; (add-hook 'c-mode-common-hook (lambda () (flyspell-prog-mode)))
 
