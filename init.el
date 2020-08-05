@@ -245,5 +245,32 @@ Ease of use features:
 ;; permet d'avoir toutes les commandes du shell en mode windowed sous unix
 (setq shell-command-switch "-ic")
 
+;;;; ---- .dir-locals file related: (from https://emacs.stackexchange.com/a/13096/18823) ---- ;;;;
+;; This function will re-read the dir-locals file and set the new values for the current buffer:
+(defun my-reload-dir-locals-for-current-buffer ()
+  "Reload dir locals for the current buffer."
+  (interactive)
+  (let ((enable-local-variables :all))
+    (hack-dir-local-variables-non-file-buffer)))
+
+;; And if you want to reload dir-locals for every buffer in your current buffer's directory:
+(defun my-reload-dir-locals-for-all-buffer-in-this-directory ()
+  "For every buffer with the same `default-directory` as the current buffer's, reload dir-locals."
+  (interactive)
+  (let ((dir default-directory))
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+        (when (equal default-directory dir))
+        (my-reload-dir-locals-for-current-buffer)))))
+
+;; You could have all the dir locals refresh every time you save a dir-locals file by adding an after-save-hook to .dir-locals.el buffers.
+(add-hook 'emacs-lisp-mode-hook
+          (defun enable-autoreload-for-dir-locals ()
+            (when (and (buffer-file-name)
+                       (equal dir-locals-file
+                              (file-name-nondirectory (buffer-file-name))))
+              (add-hook (make-variable-buffer-local 'after-save-hook)
+                        'my-reload-dir-locals-for-all-buffer-in-this-directory))))
+
 (provide 'init)
 ;;; init ends here
