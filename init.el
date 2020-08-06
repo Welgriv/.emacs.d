@@ -272,5 +272,11 @@ Ease of use features:
               (add-hook (make-variable-buffer-local 'after-save-hook)
                         'my-reload-dir-locals-for-all-buffer-in-this-directory))))
 
+;; bindings window moove to super key
+(global-set-key [s-left]  'windmove-left)
+(global-set-key [s-right]  'windmove-right)
+(global-set-key [s-up]  'windmove-up)
+(global-set-key [s-down]  'windmove-down)
+
 (provide 'init)
 ;;; init ends here
