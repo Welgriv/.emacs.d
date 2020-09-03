@@ -1,6 +1,9 @@
 ;; package --- Summary
 ;;; Commentary:
 
+;; rappel recompiler tout les .el :
+;; byte-recompile-directory
+
 ;; Rappel de raccourcis basique :
 ;; M-l met le prochain mot en minuscule
 ;; M-g n ouvrir le fichier et aller à la prochaine erreur
@@ -76,7 +79,7 @@
 	(("" "%(PDF)%(latex) -shell-escape %(file-line-error) %(extraopts) %S%(PDFout)"))))
  '(custom-enabled-themes (quote (tango-dark)))
  '(initial-frame-alist (quote ((fullscreen . maximized))))
- '(package-selected-packages (quote (auctex auctex-latexmk)))
+ '(package-selected-packages (quote (sr-speedbar auctex auctex-latexmk)))
  '(safe-local-variable-values (quote ((ispell-dictionary . "fr")))))
  ;; end of custom-vet-variable
 
@@ -275,5 +278,14 @@ Ease of use features:
 ;; bindings window moove to super key
 (windmove-default-keybindings 'super)
 
+;; sr-speedbar
+(require 'sr-speedbar)
+(global-set-key [(super ?s)] 'sr-speedbar-toggle)
+
+;; awsome tab
+(require 'awesome-tab)
+(awesome-tab-mode t)
+(setq awesome-tab-height 80)
+(setq awesome-tab-active-bar-height 10)
 (provide 'init)
 ;;; init ends here
