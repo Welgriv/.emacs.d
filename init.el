@@ -79,7 +79,9 @@
 	(("" "%(PDF)%(latex) -shell-escape %(file-line-error) %(extraopts) %S%(PDFout)"))))
  '(custom-enabled-themes (quote (tango-dark)))
  '(initial-frame-alist (quote ((fullscreen . maximized))))
- '(package-selected-packages (quote (sr-speedbar auctex auctex-latexmk)))
+ '(package-selected-packages
+   (quote
+	(company graphviz-dot-mode sr-speedbar auctex auctex-latexmk)))
  '(safe-local-variable-values (quote ((ispell-dictionary . "fr")))))
  ;; end of custom-vet-variable
 
@@ -288,4 +290,8 @@ Ease of use features:
 (setq awesome-tab-height 80)
 (setq awesome-tab-active-bar-height 10)
 (provide 'init)
+
+;; graphviz
+(require 'use-package)
+(use-package graphviz-dot-mode :ensure t)
 ;;; init ends here
